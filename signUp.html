@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>reservation</title>
-    <link rel="stylesheet" href="reservation.css">
+    <link rel="stylesheet" href="signUp.css">
     <link rel="icon" href="images/web-icon.ico" type="image/x-icon">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
 </head>
@@ -28,21 +28,17 @@
     <header class="headik">
         <div class="header-content">
             <div class="left-section">
-                <h1>Reserve a place</h1>
+                <h1>SignUp</h1>
                 <form>
-                    <label for="date">Date:</label>
+                    <label for="nickname">Name</label>
+                    <input type="nickname" id="nickname" name="nickname" required>
+                    <label for="time">Password</label>
+                    <input type="password" id="password" name="password" required>
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" required>
+                    <label for="date">Date of Birth:</label>
                     <input type="date" id="date" name="date" required>
-                    <label for="time">Time:</label>
-                    <input type="time" id="time" name="time" required>
-                    <label for="time">Type of PC:</label>
-                    <input type="text" list="type-of-pc" id="pc-type" name="pc-type">
-                        <datalist id="type-of-pc">
-                          <option value="Vip">
-                          <option value="Bootcamp">
-                          <option value="Premium">
-                          <option value="Classic">
-                        </datalist> 
-                    <button type="submit">Reserve</button>
+                    <button type="submit">Login</button>
                 </form>
             </div>
             <div class="right-section">
@@ -50,24 +46,6 @@
             </div>
         </div>
     </header>
-    <section class="our-clubs">
-        <h2>Components & Devices</h2>
-        <div class="clubs-grid">
-            <div class="club">
-                <img src="images/components/vip.png" alt="pc1">
-            </div>
-            <div class="club">
-                <img src="images/components/bootcamp.png" alt="pc2">
-            </div>
-            <div class="club">
-                <img src="images/components/premium.png" alt="pc3">
-            </div>
-            <div class="club">
-                <img src="images/components/devices.png" alt="pc5">
-            </div>
-            
-        </div>
-    </section>
     <footer id="contacts">
         <div class="footer-content">
             <p>&copy; 2024 PC Club Og Buda. All rights reserved.</p>

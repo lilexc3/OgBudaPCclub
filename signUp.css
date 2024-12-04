@@ -53,13 +53,13 @@ body {
     color: var(--text-color);
     text-decoration: none;
     font-weight: 500;
-    transition: color 0.3s ease;
+    transition: color 0.3s ease, transform 0.3s ease;
     display: inline-block;
 }
 
 .nav-bar a:hover {
     color: var(--accent-color);
-
+    transform: translateY(-2px);
 }
 
 .logo {   
@@ -90,10 +90,10 @@ body {
     background-repeat: no-repeat;
     background-size: cover;
     color: var(--text-color);
-    min-height: auto; 
+    min-height: 100vh;
     display: flex;
     align-items: center;
-    padding: 100px 5% 50px;
+    padding: 80px 5% 0;
     position: relative;
 }
 
@@ -115,7 +115,7 @@ body {
     width: 100%;
     max-width: 1200px;
     margin: 0 auto;
-    min-height: auto;
+    min-height: 100vh;
     position: relative;
     z-index: 2;
 }
@@ -143,10 +143,7 @@ body {
     display: block;
     margin-bottom: 0;
     vertical-align: bottom;
-    max-width: 100%;
-    height: auto; 
 }
-
 
 .headik form {
     background-color: rgba(42, 42, 42, 0.8);
@@ -163,6 +160,10 @@ body {
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
+.headik form:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+}
 
 .headik form label {
     display: block;
@@ -176,8 +177,7 @@ body {
     transform: translateX(5px);
 }
 
-.headik form input,
-.headik form select {
+.headik form input {
     width: 100%;
     padding: 12px;
     margin-bottom: 20px;
@@ -188,15 +188,29 @@ body {
     transition: all 0.3s ease;
 }
 
-.headik form input:focus,
-.headik form select:focus {
+.headik form input:focus {
     outline: none;
     border-color: var(--hover-color);
     box-shadow: 0 0 0 2px rgba(133, 133, 133, 0.3);
     transform: translateY(-2px);
 }
 
-.headik form input[type="submit"],
+.headik form input[type="date"] {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+}
+
+.headik form input[type="date"]::-webkit-calendar-picker-indicator {
+    filter: invert(1);
+    cursor: pointer;
+    transition: opacity 0.3s ease;
+}
+
+.headik form input[type="date"]::-webkit-calendar-picker-indicator:hover {
+    opacity: 0.7;
+}
+
 .headik form button {
     background-color: var(--accent-color);
     color: var(--primary-color);
@@ -212,97 +226,31 @@ body {
     letter-spacing: 1px;
 }
 
-.headik form input[type="submit"]:hover,
 .headik form button:hover {
     background-color: var(--hover-color);
     transform: translateY(-3px);
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
 }
 
-.headik form input[type="submit"]:active,
 .headik form button:active {
     transform: translateY(-1px);
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
 
-.headik form input[type="date"],
-.headik form input[type="time"] {
-    appearance: none;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-}
-
-.headik form input[type="date"]::-webkit-calendar-picker-indicator,
-.headik form input[type="time"]::-webkit-calendar-picker-indicator {
-    filter: invert(1);
-    cursor: pointer;
-    transition: opacity 0.3s ease;
-}
-
-.headik form input[type="date"]::-webkit-calendar-picker-indicator:hover,
-.headik form input[type="time"]::-webkit-calendar-picker-indicator:hover {
-    opacity: 0.7;
-}
-
-.headik form .custom-select {
-    position: relative;
-    display: inline-block;
-    width: 100%;
-}
-
-.headik form .custom-select select {
-    appearance: none;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    padding-right: 30px;
-}
-
-.headik form .custom-select::after {
-    content: '\25BC';
-    position: absolute;
-    top: 50%;
-    right: 10px;
-    transform: translateY(-50%);
-    pointer-events: none;
-    color: var(--accent-color);
-    transition: transform 0.3s ease;
-}
-
-.headik form .custom-select:hover::after {
-    transform: translateY(-50%) rotate(180deg);
-}
-
-.clubs-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 30px;
-    justify-items: center;
-}
-
-.club{
-    background-color: #333;
-    padding: 30px;
-    border-radius: 15px;
+.left-section p {
     text-align: center;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    margin-top: 20px;
 }
 
-.club:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-}
-
-.club img {
-    max-width: 100%;
-    height: auto; 
-    border-radius: 10px;
-}
-
-h2 {
-    text-align: center;
+.left-section a {
     color: var(--accent-color);
-    margin-bottom: 40px;
-    font-size: 2.5rem;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.left-section a:hover {
+    color: var(--hover-color);
+    text-decoration: underline;
 }
 
 footer {
@@ -341,99 +289,69 @@ footer {
     height: 30px;
 }
 
-@media (max-width: 1024px) {
-  .header-content {
-    flex-direction: column;
-    align-items: center;
-  }
+@media (max-width: 1200px) {
+    .header-content {
+        flex-direction: column;
+        align-items: center;
+    }
 
-  .left-section, .right-section {
-    width: 100%;
-    padding: 0;
-    margin-bottom: 30px;
-  }
+    .left-section, .right-section {
+        width: 100%;
+        padding: 0;
+        margin-bottom: 30px;
+    }
 
-  .right-section img {
-    max-height: 400px;
-    margin: 0 auto;
-  }
-
-  .headik form {
-    max-width: 80%;
-    margin: 0 auto;
-  }
+    .right-section img {
+        max-height: 400px;
+        margin: 0 auto;
+    }
 }
 
 @media (max-width: 768px) {
-  .nav-bar {
-    flex-direction: row;
-    justify-content: space-between;
-    padding: 10px 5%;
-  }
+    .nav-bar {
+        flex-direction: row;
+        justify-content: space-between;
+        padding: 10px 5%;
+    }
 
-  .nav-menu {
-    display: none;
-  }
+    .headik {
+        padding-top: 120px;
+    }
 
-  .header-content {
-    min-height: auto;
-  }
-  .nav-logo, .nav-user {
-    width: 100%;
-    text-align: center;
-    margin-bottom: 10px;
-  }
+    .left-section h1 {
+        font-size: 2.5rem;
+    }
 
-  .headik {
-    padding-top: 120px;
-  }
+    .right-section img {
+        max-height: 300px;
+    }
 
-  .left-section h1 {
-    font-size: 2.5rem;
-  }
-
-  .right-section img {
-    max-height: 300px;
-  }
-
-  .headik form {
-    max-width: 90%;
-  }
-
-  .clubs-grid {
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  }
-  .footer-content {
-    flex-direction: column;
-  }
+    .headik form {
+        max-width: 90%;
+    }
 }
 
 @media (max-width: 480px) {
-  .nav-bar li {
-    margin-right: 10px;
-  }
+    .nav-bar li {
+        margin-right: 10px;
+    }
 
-  .left-section h1 {
-    font-size: 1.8rem;
-  }
+    .left-section h1 {
+        font-size: 2rem;
+    }
 
-  .headik form {
-    padding: 20px;
-    max-width: 100%;
-  }
+    .headik form {
+        padding: 20px;
+    }
 
-  .right-section img {
-    max-height: 200px;
-  }
+    .right-section img {
+        max-height: 200px;
+    }
 
-  .headik form input,
-  .headik form select,
-  .headik form button {
-    font-size: 14px;
-  }
-  .clubs-grid {
-    grid-template-columns: 1fr;
-  }
+    .headik form input,
+    .headik form button {
+        font-size: 14px;
+    }
 }
 
 @keyframes fadeIn {
@@ -451,7 +369,6 @@ footer {
 }
 
 .headik form input,
-.headik form select,
 .headik form button {
     animation: fadeIn 0.5s ease-out;
     animation-fill-mode: both;
@@ -461,6 +378,5 @@ footer {
 .headik form input:nth-child(2) { animation-delay: 0.2s; }
 .headik form input:nth-child(3) { animation-delay: 0.3s; }
 .headik form input:nth-child(4) { animation-delay: 0.4s; }
-.headik form select { animation-delay: 0.5s; }
-.headik form button { animation-delay: 0.6s; }
+.headik form button { animation-delay: 0.5s; }
 

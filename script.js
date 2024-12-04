@@ -12,9 +12,8 @@ document.addEventListener('DOMContentLoaded', function() {
         showSlide(currentIndex);
     }
 
-    // Автоматическое переключение слайдов каждые 20 секунд
     setInterval(nextSlide, 20000);
 
-    // Инициализация первого слайда
+
     showSlide(0);
 });
