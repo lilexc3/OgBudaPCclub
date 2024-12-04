@@ -283,22 +283,11 @@ footer {
     height: 30px;
 }
 
-@media (max-width: 768px) {
-    .nav-bar {
+/* Responsive design improvements */
+@media (max-width: 1200px) {
+    .header-content {
         flex-direction: column;
         align-items: center;
-    }
-
-    .nav-menu {
-        margin-top: 15px;
-    }
-
-    .headik {
-        padding-top: 120px;
-    }
-
-    .header-content {
-        flex-direction: column-reverse;
         text-align: center;
     }
 
@@ -307,30 +296,76 @@ footer {
         margin-bottom: 30px;
     }
 
+    .right-section img {
+        max-height: 400px;
+        margin: 0 auto;
+    }
+}
+
+@media (max-width: 992px) {
+    .nav-bar {
+        flex-wrap: wrap;
+    }
+
+    .nav-logo, .nav-user {
+        flex-basis: 50%;
+    }
+
+    .nav-menu {
+        flex-basis: 100%;
+        order: 3;
+        margin-top: 15px;
+    }
+
+    .nav-menu ul {
+        display: flex;
+        justify-content: space-around;
+    }
+
+    .left-section h1 {
+        font-size: 3rem;
+    }
+
+    .clubs-grid, .we-have-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .nav-bar {
+        padding: 10px 5%;
+    }
+
+    .headik {
+        padding-top: 120px;
+    }
+
     .left-section h1 {
         font-size: 2.5rem;
     }
 
-    .clubs-grid, .we-have-grid, .partners-grid {
-        grid-template-columns: 1fr;
+    .cta-button {
+        max-width: 250px;
     }
 
-    .club, .we-have-item {
-        max-width: 300px;
-        margin: 0 auto;
+    .slider-container, .our-clubs, .we-have, .our-location, .our-partners {
+        padding: 30px;
+    }
+
+    h2 {
+        font-size: 2.2rem;
+    }
+
+    .partners-grid {
+        grid-template-columns: repeat(2, 1fr);
     }
 
     .footer-content {
         flex-direction: column;
-        text-align: center;
-    }
-
-    .social-links {
-        margin-top: 20px;
     }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 576px) {
     .nav-bar li {
         margin-right: 10px;
     }
@@ -339,9 +374,14 @@ footer {
         font-size: 2rem;
     }
 
+    .left-section p {
+        font-size: 1rem;
+    }
+
     .cta-button {
         padding: 12px 24px;
         font-size: 0.9rem;
+        max-width: 200px;
     }
 
     .slider-container, .our-clubs, .we-have, .our-location, .our-partners {
@@ -349,6 +389,49 @@ footer {
     }
 
     h2 {
-        font-size: 2rem;
+        font-size: 1.8rem;
+    }
+
+    .clubs-grid, .we-have-grid, .partners-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .club, .we-have-item {
+        max-width: 100%;
+    }
+
+    .partners-grid img {
+        max-width: 150px;
     }
 }
+
+@media (max-width: 400px) {
+    .nav-bar {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .nav-logo, .nav-user, .nav-menu {
+        width: 100%;
+        text-align: center;
+        margin-bottom: 10px;
+    }
+
+    .nav-menu ul {
+        flex-direction: column;
+    }
+
+    .nav-menu li {
+        margin: 5px 0;
+    }
+
+    .left-section h1 {
+        font-size: 1.8rem;
+    }
+
+    .cta-button {
+        max-width: 180px;
+        font-size: 0.8rem;
+    }
+}
+
