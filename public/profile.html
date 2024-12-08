@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile</title>
+    <link rel="stylesheet" href="profile.css">
+    <link rel="icon" href="images/web-icon.ico" type="image/x-icon">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="nav-bar" id="home">
+        <nav class="nav-logo">
+            <ul>
+                <li><a href="index.html">
+                    <span class="logo">FR3</span>
+                </a></li>
+            </ul>
+        </nav>
+        <nav class="nav-menu">
+            <ul>
+                <li><a href="reservation.html">Reserve</a></li>
+                <li><a href="#contacts">Contacts</a></li>
+                <li><a href="#more">More</a></li>
+            </ul>
+        </nav>
+        <nav class="nav-user">
+            <ul>
+                <li id="authLink">
+                    <a href="#" id="logoutButton">
+                        <img class="user" src="images/user/logout.svg" alt="logout">
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+    <header class="headik">
+        <div class="header-content">
+            <div class="profile-section">
+                <h1>User Profile</h1>
+                <div id="userInfo"></div>
+                <h2>Your Reservations</h2>
+                <div id="reservationHistory"></div>
+            </div>
+        </div>
+    </header>
+    <footer id="contacts">
+        <div class="footer-content">
+            <p>&copy; 2024 PC Club Og Buda. All rights reserved.</p>
+            <div class="social-links">
+                <a href="#" class="social-link"><img src="images/social-media/facebook.svg" alt="Facebook"></a>
+                <a href="#" class="social-link"><img src="images/social-media/twitter.svg" alt="Twitter"></a>
+                <a href="#" class="social-link"><img src="images/social-media/instagram.svg" alt="Instagram"></a>
+            </div>
+        </div>
+    </footer>
+    <script>
+        async function fetchUserInfo() {
+            try {
+                const response = await fetch('/api/user-info', {
+                    credentials: 'include'
+                });
+                if (response.ok) {
+                    const data = await response.json();
+                    displayUserInfo(data.user);
+                    displayReservationHistory(data.reservations);
+                } else {
+                    window.location.href = '/user.html';
+                }
+            } catch (error) {
+                console.error('Error fetching user info:', error);
+                window.location.href = '/user.html';
+            }
+        }
+
+        function displayUserInfo(user) {
+            const userInfoDiv = document.getElementById('userInfo');
+            userInfoDiv.innerHTML = `
+                <p><strong>Name:</strong> ${user.nickname}</p>
+                <p><strong>Email:</strong> ${user.email}</p>
+                <p><strong>Date of Birth:</strong> ${new Date(user.date).toLocaleDateString()}</p>
+            `;
+        }
+
+        function displayReservationHistory(reservations) {
+            const reservationHistoryDiv = document.getElementById('reservationHistory');
+            if (reservations.length === 0) {
+                reservationHistoryDiv.innerHTML = '<p>You have no reservations yet.</p>';
+            } else {
+                const reservationList = reservations.map(reservation => `
+                    <li>
+                        <p><strong>Date:</strong> ${new Date(reservation.date).toLocaleDateString()}</p>
+                        <p><strong>Time:</strong> ${reservation.time}</p>
+                        <p><strong>PC Type:</strong> ${reservation.pcType}</p>
+                    </li>
+                `).join('');
+                reservationHistoryDiv.innerHTML = `<ul>${reservationList}</ul>`;
+            }
+        }
+
+        document.getElementById('logoutButton').addEventListener('click', async (e) => {
+            e.preventDefault();
+            try {
+                const response = await fetch('/logout', {
+                    method: 'POST',
+                    credentials: 'include'
+                });
+                if (response.ok) {
+                    window.location.href = '/user.html';
+                }
+            } catch (error) {
+                console.error('Error logging out:', error);
+            }
+        });
+
+        fetchUserInfo();
+    </script>
+</body>
+</html>
+

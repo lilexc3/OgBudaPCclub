@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>reservation</title>
+    <title>Reservation</title>
     <link rel="stylesheet" href="reservation.css">
     <link rel="icon" href="images/web-icon.ico" type="image/x-icon">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
@@ -17,11 +17,20 @@
                 </a></li>
             </ul>
         </nav>
+        <nav class="nav-menu">
+            <ul>
+                <li><a href="reservation.html">Reserve</a></li>
+                <li><a href="#contacts">Contacts</a></li>
+                <li><a href="#more">More</a></li>
+            </ul>
+        </nav>
         <nav class="nav-user">
             <ul>
-                <li><a href="user.html">
-                    <img class="user" src="images/user/user-white.svg" alt="user">
-                </a></li>
+                <li id="authLink">
+                    <a href="user.html">
+                        <img class="user" src="images/user/user-white.svg" alt="user">
+                    </a>
+                </li>
             </ul>
         </nav>
     </div>
@@ -44,32 +53,7 @@
                     </datalist> 
                     <button type="submit">Reserve</button>
                 </form>
-                <div id="message"></div>
-                <script>
-                    document.getElementById('reservationForm').addEventListener('submit', async (e) => {
-                        e.preventDefault();
-                        const formData = new FormData(e.target);
-                        const data = Object.fromEntries(formData);
-                        // Здесь вы должны добавить userId и placeId к данным
-                        data.userId = 'someUserId'; // Замените на реальный ID пользователя
-                        data.placeId = 'somePlaceId'; // Замените на реальный ID места
-
-                        try {
-                            const response = await fetch('http://localhost:3000/reserve', {
-                                method: 'POST',
-                                headers: {
-                                    'Content-Type': 'application/json',
-                                },
-                                body: JSON.stringify(data),
-                            });
-                            const result = await response.json();
-                            document.getElementById('message').textContent = result.message;
-                        } catch (error) {
-                            console.error('Error:', error);
-                            document.getElementById('message').textContent = 'An error occurred';
-                        }
-                    });
-                </script>                
+                <div id="notification" class="notification"></div>
             </div>
             <div class="right-section">
                 <img src="images/buda-baner.png" alt="pc">
@@ -91,7 +75,6 @@
             <div class="club">
                 <img src="images/components/devices.png" alt="pc5">
             </div>
-            
         </div>
     </section>
     <footer id="contacts">
@@ -104,6 +87,61 @@
             </div>
         </div>
     </footer>
+    <script>
+        async function checkAuthStatus() {
+            try {
+                const response = await fetch('/api/user-info', {
+                    credentials: 'include'
+                });
+                if (response.ok) {
+                    document.getElementById('authLink').innerHTML = `
+                        <a href="profile.html">
+                            <img class="user" src="images/user/user-white.svg" alt="profile">
+                        </a>
+                    `;
+                } else {
+                    window.location.href = '/user.html';
+                }
+            } catch (error) {
+                console.error('Error checking auth status:', error);
+                window.location.href = '/user.html';
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', checkAuthStatus);
+
+        document.getElementById('reservationForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+            const data = Object.fromEntries(formData);
+
+            try {
+                const response = await fetch('/reserve', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data),
+                    credentials: 'include'
+                });
+                const result = await response.json();
+                const notification = document.getElementById('notification');
+                notification.textContent = result.message;
+                notification.className = 'notification ' + (response.ok ? 'success' : 'error');
+                
+                if (response.status === 401) {
+                    setTimeout(() => {
+                        window.location.href = '/user.html';
+                    }, 2000);
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                const notification = document.getElementById('notification');
+                notification.textContent = 'An error occurred';
+                notification.className = 'notification error';
+            }
+        });
+    </script>
 </body>
 </html>
 

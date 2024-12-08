@@ -36,7 +36,7 @@
                     <input type="password" id="password" name="password" required>
                     <button type="submit">Login</button>
                 </form>
-                <div id="message"></div>
+                <div id="notification" class="notification"></div>
                 <p>Don't have an account? <a href="signUp.html">Sign up</a></p>
             </div>
             <div class="right-section">
@@ -61,18 +61,29 @@
             const data = Object.fromEntries(formData);
 
             try {
-                const response = await fetch('http://localhost:3000/login', {
+                const response = await fetch('/login', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
                     },
                     body: JSON.stringify(data),
+                    credentials: 'include'
                 });
                 const result = await response.json();
-                document.getElementById('message').textContent = result.message;
+                const notification = document.getElementById('notification');
+                notification.textContent = result.message;
+                notification.className = 'notification ' + (response.ok ? 'success' : 'error');
+                
+                if (response.ok) {
+                    setTimeout(() => {
+                        window.location.href = '/profile.html';
+                    }, 2000);
+                }
             } catch (error) {
                 console.error('Error:', error);
-                document.getElementById('message').textContent = 'An error occurred';
+                const notification = document.getElementById('notification');
+                notification.textContent = 'An error occurred';
+                notification.className = 'notification error';
             }
         });
     </script>

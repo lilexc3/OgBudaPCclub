@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>reservation</title>
+    <title>Sign Up</title>
     <link rel="stylesheet" href="signUp.css">
     <link rel="icon" href="images/web-icon.ico" type="image/x-icon">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
@@ -28,7 +28,7 @@
     <header class="headik">
         <div class="header-content">
             <div class="left-section">
-                <h1>SignUp</h1>
+                <h1>Sign Up</h1>
                 <form id="signupForm">
                     <label for="nickname">Name</label>
                     <input type="text" id="nickname" name="nickname" required>
@@ -40,30 +40,7 @@
                     <input type="date" id="date" name="date" required>
                     <button type="submit">Sign Up</button>
                 </form>
-                <div id="message"></div>
-
-                <script>
-                    document.getElementById('signupForm').addEventListener('submit', async (e) => {
-                        e.preventDefault();
-                        const formData = new FormData(e.target);
-                        const data = Object.fromEntries(formData);
-
-                        try {
-                            const response = await fetch('http://localhost:3000/signup', {
-                                method: 'POST',
-                                headers: {
-                                    'Content-Type': 'application/json',
-                                },
-                                body: JSON.stringify(data),
-                            });
-                            const result = await response.json();
-                            document.getElementById('message').textContent = result.message;
-                        } catch (error) {
-                            console.error('Error:', error);
-                            document.getElementById('message').textContent = 'An error occurred';
-                        }
-                    });
-                </script>                
+                <div id="notification" class="notification"></div>
             </div>
             <div class="right-section">
                 <img src="images/buda-baner.png" alt="pc">
@@ -80,6 +57,38 @@
             </div>
         </div>
     </footer>
+    <script>
+        document.getElementById('signupForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+            const data = Object.fromEntries(formData);
+
+            try {
+                const response = await fetch('http://localhost:3000/signup', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data),
+                });
+                const result = await response.json();
+                const notification = document.getElementById('notification');
+                notification.textContent = result.message;
+                notification.className = 'notification ' + (response.ok ? 'success' : 'error');
+                
+                if (response.ok) {
+                    setTimeout(() => {
+                        window.location.href = '/user.html';
+                    }, 2000);
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                const notification = document.getElementById('notification');
+                notification.textContent = 'An error occurred';
+                notification.className = 'notification error';
+            }
+        });
+    </script>
 </body>
 </html>
 

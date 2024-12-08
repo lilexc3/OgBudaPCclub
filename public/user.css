@@ -273,6 +273,27 @@ footer {
     height: 30px;
 }
 
+/* Add this to the existing CSS */
+
+.notification {
+    padding: 10px;
+    margin-top: 20px;
+    border-radius: 5px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.notification.success {
+    background-color: var(--success-color);
+    color: white;
+}
+
+.notification.error {
+    background-color: var(--error-color);
+    color: white;
+}
+
+
 @media (max-width: 1200px) {
     .header-content {
         flex-direction: column;

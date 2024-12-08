@@ -19,16 +19,18 @@
         </nav>
         <nav class="nav-menu">
             <ul>
-                <li><a href="reservation.html">Reserve</a></li>
+                <li><a href="reservation.html" id="reserveLink">Reserve</a></li>
                 <li><a href="#contacts">Contacts</a></li>
                 <li><a href="#more">More</a></li>
             </ul>
         </nav>
         <nav class="nav-user">
             <ul>
-                <li><a href="user.html">
-                    <img class="user" src="images/user/user-white.svg" alt="user">
-                </a></li>
+                <li id="authLink">
+                    <a href="user.html">
+                        <img class="user" src="images/user/user-white.svg" alt="user">
+                    </a>
+                </li>
             </ul>
         </nav>
     </div>
@@ -39,7 +41,7 @@
                 <h1>Og Buda PC Club</h1>
                 <p>by PCsherDentik</p>
                 <p>The largest PC Club in Poland</p>
-                <button class="cta-button" src="reservation.html">Reserve a place</button>
+                <button class="cta-button" id="reserveButton">Reserve a place</button>
             </div>
             <div class="right-section">
                 <img src="images/buda-baner.png" alt="pc">
@@ -139,6 +141,35 @@
     </footer>
 
     <script src="script.js"></script>
+    <script>
+        async function checkAuthStatus() {
+            try {
+                const response = await fetch('/api/user-info', {
+                    credentials: 'include'
+                });
+                if (response.ok) {
+                    document.getElementById('authLink').innerHTML = `
+                        <a href="profile.html">
+                            <img class="user" src="images/user/user-white.svg" alt="profile">
+                        </a>
+                    `;
+                    document.getElementById('reserveLink').href = 'reservation.html';
+                    document.getElementById('reserveButton').onclick = () => {
+                        window.location.href = 'reservation.html';
+                    };
+                } else {
+                    document.getElementById('reserveLink').href = 'user.html';
+                    document.getElementById('reserveButton').onclick = () => {
+                        window.location.href = 'user.html';
+                    };
+                }
+            } catch (error) {
+                console.error('Error checking auth status:', error);
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', checkAuthStatus);
+    </script>
 </body>
 </html>
 
