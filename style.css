@@ -287,7 +287,6 @@ footer {
     height: 30px;
 }
 
-/* Add these keyframe animations at the end of the file */
 @keyframes fadeIn {
     from { opacity: 0; }
     to { opacity: 1; }
@@ -298,7 +297,6 @@ footer {
     to { transform: translateY(0); opacity: 1; }
 }
 
-/* Add these animation styles to the relevant elements */
 .headik {
     animation: fadeIn 0.5s ease-out;
 }
