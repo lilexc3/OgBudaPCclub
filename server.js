@@ -6,6 +6,7 @@ const cors = require('cors');
 const path = require('path');
 const session = require('express-session');
 const bcrypt = require('bcrypt');
+const { ObjectId } = require('mongodb');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -55,7 +56,6 @@ async function startServer() {
     }
 }
 
-
 // Route для главной страницы
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'index.html'));
@@ -97,6 +97,12 @@ app.post('/signup', async (req, res) => {
     const { nickname, password, email, date } = req.body;
 
     try {
+        // Проверка, существует ли уже пользователь с таким email
+        const existingUser = await db.collection('users').findOne({ email });
+        if (existingUser) {
+            return res.status(400).json({ message: 'User with this email already exists' });
+        }
+
         const hashedPassword = await bcrypt.hash(password, 10);
         const result = await db.collection('users').insertOne({ nickname, password: hashedPassword, email, date });
         console.log('User created:', result);
@@ -114,8 +120,8 @@ app.post('/login', async (req, res) => {
     try {
         const user = await db.collection('users').findOne({ email });
         if (user && await bcrypt.compare(password, user.password)) {
-            req.session.userId = user._id;
-            res.status(200).json({ message: 'Login successful', redirect: '/profile' });
+            req.session.userId = user._id.toString();
+            res.status(200).json({ message: 'Login successful', redirect: '/profile.html' });
         } else {
             res.status(401).json({ message: 'Invalid credentials' });
         }
@@ -142,12 +148,31 @@ app.post('/reserve', isAuthenticated, async (req, res) => {
 // API endpoint для получения информации о пользователе и его бронированиях
 app.get('/api/user-info', isAuthenticated, async (req, res) => {
     try {
-        const user = await db.collection('users').findOne({ _id: req.session.userId });
+        const userId = new ObjectId(req.session.userId);
+        const user = await db.collection('users').findOne({ _id: userId });
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
         const reservations = await db.collection('reservations').find({ userId: req.session.userId }).toArray();
         res.json({ user, reservations });
     } catch (err) {
         console.error('Error fetching user info:', err);
         res.status(500).json({ message: 'Error fetching user information' });
+    }
+});
+
+// Новый endpoint для получения имени пользователя
+app.get('/api/username', isAuthenticated, async (req, res) => {
+    try {
+        const userId = new ObjectId(req.session.userId);
+        const user = await db.collection('users').findOne({ _id: userId });
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+        res.json({ nickname: user.nickname });
+    } catch (err) {
+        console.error('Error fetching username:', err);
+        res.status(500).json({ message: 'Error fetching username' });
     }
 });
 
@@ -161,6 +186,15 @@ app.post('/logout', (req, res) => {
             res.json({ message: 'Logout successful', redirect: '/user.html' });
         }
     });
+});
+
+// Add a new route to check authentication status
+app.get('/api/auth-status', (req, res) => {
+    if (req.session.userId) {
+        res.json({ isAuthenticated: true });
+    } else {
+        res.json({ isAuthenticated: false });
+    }
 });
 
 // Обработчик 404 (страница не найдена)

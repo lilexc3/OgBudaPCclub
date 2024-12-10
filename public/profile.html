@@ -55,65 +55,105 @@
         </div>
     </footer>
     <script>
-        async function fetchUserInfo() {
-            try {
-                const response = await fetch('/api/user-info', {
-                    credentials: 'include'
-                });
-                if (response.ok) {
-                    const data = await response.json();
+    let authCheckInProgress = false;
+
+    async function checkAuthStatus() {
+        if (authCheckInProgress) return;
+        authCheckInProgress = true;
+
+        try {
+            const response = await fetch('/api/auth-status');
+            const data = await response.json();
+            if (!data.isAuthenticated) {
+                window.location.href = '/user.html';
+            } else {
+                fetchUserInfo();
+            }
+        } catch (error) {
+            console.error('Error checking auth status:', error);
+            displayError('Failed to check authentication status. Please try again later.');
+        } finally {
+            authCheckInProgress = false;
+        }
+    }
+
+    async function fetchUserInfo() {
+        try {
+            const response = await fetch('/api/user-info', {
+                credentials: 'include'
+            });
+            if (response.ok) {
+                const data = await response.json();
+                if (data.user && data.reservations) {
                     displayUserInfo(data.user);
                     displayReservationHistory(data.reservations);
                 } else {
-                    window.location.href = '/user.html';
+                    throw new Error('Invalid user data received');
                 }
-            } catch (error) {
-                console.error('Error fetching user info:', error);
-                window.location.href = '/user.html';
+            } else {
+                throw new Error('Failed to fetch user info');
             }
+        } catch (error) {
+            console.error('Error fetching user info:', error);
+            displayError('Failed to load user information. Please try refreshing the page.');
         }
+    }
 
-        function displayUserInfo(user) {
-            const userInfoDiv = document.getElementById('userInfo');
+    function displayUserInfo(user) {
+        const userInfoDiv = document.getElementById('userInfo');
+        if (user && user.nickname && user.email && user.date) {
             userInfoDiv.innerHTML = `
                 <p><strong>Name:</strong> ${user.nickname}</p>
                 <p><strong>Email:</strong> ${user.email}</p>
                 <p><strong>Date of Birth:</strong> ${new Date(user.date).toLocaleDateString()}</p>
             `;
+        } else {
+            userInfoDiv.innerHTML = '<p>User information is incomplete or not available.</p>';
         }
+    }
 
-        function displayReservationHistory(reservations) {
-            const reservationHistoryDiv = document.getElementById('reservationHistory');
-            if (reservations.length === 0) {
-                reservationHistoryDiv.innerHTML = '<p>You have no reservations yet.</p>';
+    function displayReservationHistory(reservations) {
+        const reservationHistoryDiv = document.getElementById('reservationHistory');
+        if (Array.isArray(reservations) && reservations.length > 0) {
+            const reservationList = reservations.map(reservation => `
+                <li>
+                    <p><strong>Date:</strong> ${new Date(reservation.date).toLocaleDateString()}</p>
+                    <p><strong>Time:</strong> ${reservation.time}</p>
+                    <p><strong>PC Type:</strong> ${reservation.pcType}</p>
+                </li>
+            `).join('');
+            reservationHistoryDiv.innerHTML = `<ul>${reservationList}</ul>`;
+        } else {
+            reservationHistoryDiv.innerHTML = '<p>You have no reservations yet.</p>';
+        }
+    }
+
+    function displayError(message) {
+        const userInfoDiv = document.getElementById('userInfo');
+        const reservationHistoryDiv = document.getElementById('reservationHistory');
+        userInfoDiv.innerHTML = `<p class="error">${message}</p>`;
+        reservationHistoryDiv.innerHTML = '';
+    }
+
+    document.getElementById('logoutButton').addEventListener('click', async (e) => {
+        e.preventDefault();
+        try {
+            const response = await fetch('/logout', {
+                method: 'POST',
+                credentials: 'include'
+            });
+            if (response.ok) {
+                window.location.href = '/user.html';
             } else {
-                const reservationList = reservations.map(reservation => `
-                    <li>
-                        <p><strong>Date:</strong> ${new Date(reservation.date).toLocaleDateString()}</p>
-                        <p><strong>Time:</strong> ${reservation.time}</p>
-                        <p><strong>PC Type:</strong> ${reservation.pcType}</p>
-                    </li>
-                `).join('');
-                reservationHistoryDiv.innerHTML = `<ul>${reservationList}</ul>`;
+                throw new Error('Logout failed');
             }
+        } catch (error) {
+            console.error('Error logging out:', error);
+            alert('Failed to log out. Please try again.');
         }
+    });
 
-        document.getElementById('logoutButton').addEventListener('click', async (e) => {
-            e.preventDefault();
-            try {
-                const response = await fetch('/logout', {
-                    method: 'POST',
-                    credentials: 'include'
-                });
-                if (response.ok) {
-                    window.location.href = '/user.html';
-                }
-            } catch (error) {
-                console.error('Error logging out:', error);
-            }
-        });
-
-        fetchUserInfo();
+    document.addEventListener('DOMContentLoaded', checkAuthStatus);
     </script>
 </body>
 </html>

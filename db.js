@@ -8,7 +8,6 @@ let db;
 async function connectToDatabase() {
     try {
         if (!client) {
-            console.log('Attempting to connect with URI:', uri.replace(/\/\/.*@/, '//<credentials>@'));
             client = new MongoClient(uri);
             await client.connect();
             console.log('Connected to MongoDB Atlas');

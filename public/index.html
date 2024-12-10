@@ -144,13 +144,14 @@
     <script>
         async function checkAuthStatus() {
             try {
-                const response = await fetch('/api/user-info', {
-                    credentials: 'include'
-                });
-                if (response.ok) {
+                const response = await fetch('/api/auth-status');
+                const data = await response.json();
+                if (data.isAuthenticated) {
+                    const usernameResponse = await fetch('/api/username', { credentials: 'include' });
+                    const usernameData = await usernameResponse.json();
                     document.getElementById('authLink').innerHTML = `
                         <a href="profile.html">
-                            <img class="user" src="images/user/user-white.svg" alt="profile">
+                            ${usernameData.nickname}
                         </a>
                     `;
                     document.getElementById('reserveLink').href = 'reservation.html';
@@ -172,4 +173,3 @@
     </script>
 </body>
 </html>
-
