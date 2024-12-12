@@ -1,3 +1,4 @@
+/* Kolory */
 :root {
     --primary-color: #1a1a1a;
     --secondary-color: #2a2a2a;
@@ -8,6 +9,7 @@
     --error-color: #f44336;
 }
 
+/* Podstawowe style dla body */
 body {
     font-family: 'Roboto', sans-serif;
     margin: 0;
@@ -17,6 +19,7 @@ body {
     line-height: 1.6;
 }
 
+/* Styl paska nawigacyjnego */
 .nav-bar {
     background-color: rgba(27, 27, 27, 0.9);
     color: var(--text-color);
@@ -33,22 +36,26 @@ body {
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
+/* Efekt hover dla paska nawigacyjnego */
 .nav-bar:hover {
     background-color: rgba(27, 27, 27, 1);
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
 }
 
+/* Lista elementów w pasku nawigacyjnym */
 .nav-bar ul {
     list-style-type: none;
     padding: 0;
     margin: 0;
 }
 
+/* Elementy listy w pasku nawigacyjnym */
 .nav-bar li {
     display: inline;
     margin-right: 20px;
 }
 
+/* Linki w pasku nawigacyjnym */
 .nav-bar a {
     color: var(--text-color);
     text-decoration: none;
@@ -57,11 +64,13 @@ body {
     display: inline-block;
 }
 
+/* Efekt hover dla linków */
 .nav-bar a:hover {
     color: var(--accent-color);
 
 }
 
+/* Styl logo */
 .logo {   
     font-size: 28px;
     font-weight: bold;
@@ -69,20 +78,24 @@ body {
     transition: text-shadow 0.3s ease;
 }
 
+/* Efekt hover dla logo */
 .logo:hover {
     text-shadow: 0 0 10px rgba(177, 177, 177, 0.5);
 }
 
+/* Ikona użytkownika */
 .user {
     width: 24px;
     height: 24px;
     transition: transform 0.3s ease;
 }
 
+/* Efekt hover dla ikony użytkownika */
 .user:hover {
     transform: scale(1.1) rotate(5deg);
 }
 
+/* Styl nagłówka */
 .headik {
     background-color: var(--secondary-color);
     background-image: url(images/banrt.gif);
@@ -97,6 +110,7 @@ body {
     position: relative;
 }
 
+/* Efekt hover dla nagłówka */
 .headik::before {
     content: '';
     position: absolute;
@@ -108,6 +122,7 @@ body {
     z-index: 1;
 }
 
+/* Styl sekcji nagłówka */
 .header-content {
     display: flex;
     justify-content: space-between;
@@ -120,23 +135,27 @@ body {
     z-index: 2;
 }
 
+/* Styl lewej sekcji */
 .left-section {
     flex: 1;
     padding-right: 40px;
 }
 
+/* Styl nagłówka */
 .left-section h1 {
     font-size: 3.5rem;
     margin-bottom: 20px;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
+/* Styl prawej sekcji */
 .right-section {
     align-self: flex-end;
     margin-bottom: 0;
     padding-bottom: 0;
 }
 
+/* Styl obrazka */
 .right-section img {
     max-height: 600px;
     width: auto;
@@ -148,6 +167,7 @@ body {
 }
 
 
+/* Styl formularza */
 .headik form {
     background-color: rgba(42, 42, 42, 0.8);
     padding-top: 40px;
@@ -164,6 +184,7 @@ body {
 }
 
 
+/* Styl etykiety */
 .headik form label {
     display: block;
     margin-bottom: 8px;
@@ -172,10 +193,12 @@ body {
     transition: transform 0.3s ease;
 }
 
+/* Efekt hover dla etykiety */
 .headik form label:hover {
     transform: translateX(5px);
 }
 
+/* Styl inputów i selectów */
 .headik form input,
 .headik form select {
     width: 100%;
@@ -188,6 +211,7 @@ body {
     transition: all 0.3s ease;
 }
 
+/* Efekt focus dla inputów i selectów */
 .headik form input:focus,
 .headik form select:focus {
     outline: none;
@@ -196,6 +220,7 @@ body {
     transform: translateY(-2px);
 }
 
+/* Styl przycisków */
 .headik form input[type="submit"],
 .headik form button {
     background-color: var(--accent-color);
@@ -212,6 +237,7 @@ body {
     letter-spacing: 1px;
 }
 
+/* Efekt hover dla przycisków */
 .headik form input[type="submit"]:hover,
 .headik form button:hover {
     background-color: var(--hover-color);
@@ -219,12 +245,14 @@ body {
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
 }
 
+/* Efekt aktywacji dla przycisków */
 .headik form input[type="submit"]:active,
 .headik form button:active {
     transform: translateY(-1px);
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
 
+/* Styl inputów typu date i time */
 .headik form input[type="date"],
 .headik form input[type="time"] {
     appearance: none;
@@ -232,6 +260,7 @@ body {
     -moz-appearance: none;
 }
 
+/* Styl ikony kalendarza */
 .headik form input[type="date"]::-webkit-calendar-picker-indicator,
 .headik form input[type="time"]::-webkit-calendar-picker-indicator {
     filter: invert(1);
@@ -239,17 +268,20 @@ body {
     transition: opacity 0.3s ease;
 }
 
+/* Efekt hover dla ikony kalendarza */
 .headik form input[type="date"]::-webkit-calendar-picker-indicator:hover,
 .headik form input[type="time"]::-webkit-calendar-picker-indicator:hover {
     opacity: 0.7;
 }
 
+/* Styl selektora */
 .headik form .custom-select {
     position: relative;
     display: inline-block;
     width: 100%;
 }
 
+/* Styl selektora */
 .headik form .custom-select select {
     appearance: none;
     -webkit-appearance: none;
@@ -268,10 +300,12 @@ body {
     transition: transform 0.3s ease;
 }
 
+/* Efekt hover dla selektora */
 .headik form .custom-select:hover::after {
     transform: translateY(-50%) rotate(180deg);
 }
 
+/* Siatka klubów */
 .clubs-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -279,6 +313,7 @@ body {
     justify-items: center;
 }
 
+/* Styl elementu klubu */
 .club{
     background-color: #333;
     padding: 30px;
@@ -287,17 +322,20 @@ body {
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
+/* Efekt hover dla klubu */
 .club:hover {
     transform: translateY(-10px);
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
 }
 
+/* Styl obrazka klubu */
 .club img {
     max-width: 100%;
     height: auto; 
     border-radius: 10px;
 }
 
+/* Styl nagłówka */
 h2 {
     text-align: center;
     color: var(--accent-color);
@@ -305,6 +343,7 @@ h2 {
     font-size: 2.5rem;
 }
 
+/* Styl stopki */
 footer {
     background-color: #000000;
     color: var(--text-color);
@@ -313,6 +352,7 @@ footer {
     margin-top: 60px;
 }
 
+/* Zawartość stopki */
 .footer-content {
     max-width: 1200px;
     margin: 0 auto;
@@ -322,27 +362,30 @@ footer {
     flex-wrap: wrap;
 }
 
+/* Linki społecznościowe */
 .social-links {
     margin-top: 20px;
 }
 
+/* Pojedynczy link społecznościowy */
 .social-link {
     margin: 0 15px;
     display: inline-block;
     transition: transform 0.3s ease;
 }
 
+/* Efekt hover dla linku społecznościowego */
 .social-link:hover {
     transform: translateY(-5px);
 }
 
+/* Obrazki w linkach społecznościowych */
 .social-link img {
     width: 30px;
     height: 30px;
 }
 
-/* Add this to the existing CSS */
-
+/* Styl powiadomień */
 .notification {
     padding: 10px;
     margin-top: 20px;
@@ -351,11 +394,13 @@ footer {
     font-weight: bold;
 }
 
+/* Powiadomienie sukcesu */
 .notification.success {
     background-color: var(--success-color);
     color: white;
 }
 
+/* Powiadomienie błędu */
 .notification.error {
     background-color: var(--error-color);
     color: white;
@@ -363,115 +408,144 @@ footer {
 
 
 
+/* Media queries dla responsywności */
 @media (max-width: 1024px) {
+  /* Przy szerokości ekranu 1024px i mniejszej zmień styl sekcji header-content */
   .header-content {
     flex-direction: column;
     align-items: center;
   }
 
+  /* Zmień styl lewej i prawej sekcji */
   .left-section, .right-section {
     width: 100%;
     padding: 0;
     margin-bottom: 30px;
   }
 
+  /* Zmień styl obrazka w prawej sekcji */
   .right-section img {
     max-height: 400px;
     margin: 0 auto;
   }
 
+  /* Zmień styl formularza */
   .headik form {
     max-width: 80%;
     margin: 0 auto;
   }
 }
 
+/* Media queries dla responsywności */
 @media (max-width: 768px) {
+  /* Zmień styl paska nawigacyjnego */
   .nav-bar {
     flex-direction: row;
     justify-content: space-between;
     padding: 10px 5%;
   }
 
+  /* Ukryj menu */
   .nav-menu {
     display: none;
   }
 
+  /* Zmień styl sekcji header-content */
   .header-content {
     min-height: auto;
   }
+
+  /* Zmień styl logo i użytkownika */
   .nav-logo, .nav-user {
     width: 100%;
     text-align: center;
     margin-bottom: 10px;
   }
 
+  /* Zmień styl nagłówka */
   .headik {
     padding-top: 120px;
   }
 
+  /* Zmień styl tytułu */
   .left-section h1 {
     font-size: 2.5rem;
   }
 
+  /* Zmień styl obrazka */
   .right-section img {
     max-height: 300px;
   }
 
+  /* Zmień styl formularza */
   .headik form {
     max-width: 90%;
   }
 
+  /* Zmień styl siatki */
   .clubs-grid {
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   }
+  /* Zmień styl zawartości stopki */
   .footer-content {
     flex-direction: column;
   }
 }
 
+/* Media queries dla responsywności */
 @media (max-width: 480px) {
+  /* Zmień styl elementów listy w pasku nawigacyjnym */
   .nav-bar li {
     margin-right: 10px;
   }
 
+  /* Zmień styl tytułu */
   .left-section h1 {
     font-size: 1.8rem;
   }
 
+  /* Zmień styl formularza */
   .headik form {
     padding: 20px;
     max-width: 100%;
   }
 
+  /* Zmień styl obrazka */
   .right-section img {
     max-height: 200px;
   }
 
+  /* Zmień styl inputów, selecta i buttona w formularzu */
   .headik form input,
   .headik form select,
   .headik form button {
     font-size: 14px;
   }
+
+  /* Zmień styl siatki */
   .clubs-grid {
     grid-template-columns: 1fr;
   }
 }
 
+/* Animacja fadeIn */
 @keyframes fadeIn {
     from { opacity: 0; }
     to { opacity: 1; }
 }
 
+/* Animacja slideIn */
 @keyframes slideIn {
     from { transform: translateY(20px); opacity: 0; }
     to { transform: translateY(0); opacity: 1; }
 }
 
+/* Animacja formularza */
 .headik form {
     animation: fadeIn 0.5s ease-out, slideIn 0.5s ease-out;
 }
 
+/* Animacja inputów, selecta i buttona w formularzu */
 .headik form input,
 .headik form select,
 .headik form button {
@@ -479,6 +553,7 @@ footer {
     animation-fill-mode: both;
 }
 
+/* Opóźnienie animacji inputów, selecta i buttona w formularzu */
 .headik form input:nth-child(1) { animation-delay: 0.1s; }
 .headik form input:nth-child(2) { animation-delay: 0.2s; }
 .headik form input:nth-child(3) { animation-delay: 0.3s; }

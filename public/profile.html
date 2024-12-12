@@ -58,32 +58,40 @@
     let authCheckInProgress = false;
 
     async function checkAuthStatus() {
+        // Zapobiega wielokrotnemu wywolaniu tej funkcji
         if (authCheckInProgress) return;
         authCheckInProgress = true;
 
         try {
+            // Pobiera informacje o statusie autoryzacji uzytkownika
             const response = await fetch('/api/auth-status');
             const data = await response.json();
+            // Jesli uzytkownik nie jest zalogowany, przekierowuje na strone logowania
             if (!data.isAuthenticated) {
                 window.location.href = '/user.html';
             } else {
+                // Pobiera informacje o zalogowanym uzytkowniku
                 fetchUserInfo();
             }
         } catch (error) {
             console.error('Error checking auth status:', error);
+            // Wyswietla blad, jesli nie udalo sie sprawdzic statusu autoryzacji
             displayError('Failed to check authentication status. Please try again later.');
         } finally {
+            // Resetuje flaga, aby mozna bylo ponownie wywolac tia funkcje
             authCheckInProgress = false;
         }
     }
 
     async function fetchUserInfo() {
         try {
+            // Pobiera informacje o zalogowanym uzytkowniku
             const response = await fetch('/api/user-info', {
                 credentials: 'include'
             });
             if (response.ok) {
                 const data = await response.json();
+                // Sprawdza, czy dane uzytkownika i rezerwacje sa dostepne
                 if (data.user && data.reservations) {
                     displayUserInfo(data.user);
                     displayReservationHistory(data.reservations);
@@ -95,11 +103,13 @@
             }
         } catch (error) {
             console.error('Error fetching user info:', error);
+            // Wyswietla blad, jesli nie udalo sie pobrac informacji o uzytkowniku
             displayError('Failed to load user information. Please try refreshing the page.');
         }
     }
 
     function displayUserInfo(user) {
+        // Wyswietla informacje o uzytkowniku
         const userInfoDiv = document.getElementById('userInfo');
         if (user && user.nickname && user.email && user.date) {
             userInfoDiv.innerHTML = `
@@ -112,6 +122,7 @@
         }
     }
 
+    // Funkcja wyswietlajaca historie rezerwacji
     function displayReservationHistory(reservations) {
         const reservationHistoryDiv = document.getElementById('reservationHistory');
         if (Array.isArray(reservations) && reservations.length > 0) {
@@ -128,6 +139,7 @@
         }
     }
 
+    // Funkcja wyswietlajaca blad
     function displayError(message) {
         const userInfoDiv = document.getElementById('userInfo');
         const reservationHistoryDiv = document.getElementById('reservationHistory');
@@ -135,6 +147,7 @@
         reservationHistoryDiv.innerHTML = '';
     }
 
+    // Obsluga klikniecia przycisku wylogowania
     document.getElementById('logoutButton').addEventListener('click', async (e) => {
         e.preventDefault();
         try {
@@ -153,6 +166,7 @@
         }
     });
 
+    // Sprawdza status autoryzacji po zaladowaniu dokumentu
     document.addEventListener('DOMContentLoaded', checkAuthStatus);
     </script>
 </body>

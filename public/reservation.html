@@ -88,34 +88,42 @@
         </div>
     </footer>
     <script>
+        // Sprawdza, czy u ytkownik jest zalogowany
         async function checkAuthStatus() {
             try {
+                // Wysyla zapytanie, aby sprawdzi  informacje o u ytkowniku
                 const response = await fetch('/api/user-info', {
                     credentials: 'include'
                 });
                 if (response.ok) {
+                    // Jesli u ytkownik jest zalogowany, zmienia link "Login" na "Profile"
                     document.getElementById('authLink').innerHTML = `
                         <a href="profile.html">
                             <img class="user" src="images/user/user-white.svg" alt="profile">
                         </a>
                     `;
                 } else {
+                    // Jesli u ytkownik nie jest zalogowany, przekierowuje na strone logowania
                     window.location.href = '/user.html';
                 }
             } catch (error) {
                 console.error('Error checking auth status:', error);
+                // Jesli wyst pi  b  d, przekierowuje na strone logowania
                 window.location.href = '/user.html';
             }
         }
 
+        // Wywoluje funkcje, kt ra sprawdza, czy u ytkownik jest zalogowany
         document.addEventListener('DOMContentLoaded', checkAuthStatus);
 
+        // Obsluga formularza rezerwacji
         document.getElementById('reservationForm').addEventListener('submit', async (e) => {
             e.preventDefault();
             const formData = new FormData(e.target);
             const data = Object.fromEntries(formData);
 
             try {
+                // Wysyla zapytanie o rezerwacje
                 const response = await fetch('/reserve', {
                     method: 'POST',
                     headers: {
@@ -130,6 +138,7 @@
                 notification.className = 'notification ' + (response.ok ? 'success' : 'error');
                 
                 if (response.status === 401) {
+                    // Jesli u ytkownik nie jest zalogowany, przekierowuje na strone logowania
                     setTimeout(() => {
                         window.location.href = '/user.html';
                     }, 2000);

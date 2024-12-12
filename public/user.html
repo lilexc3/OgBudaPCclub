@@ -55,46 +55,63 @@
         </div>
     </footer>
     <script>
+    // Sprawdza, czy uzytkownik jest zalogowany i przekierowuje na strone profilu, jesli tak
     let authCheckInProgress = false;
 
+    // Funkcja sprawdzajaca status autoryzacji uzytkownika
     async function checkAuthStatus() {
+        // Zapobiega wielokrotnemu wywolaniu tej funkcji
         if (authCheckInProgress) return;
         authCheckInProgress = true;
 
         try {
+            // Pobiera informacje o statusie autoryzacji uzytkownika
             const response = await fetch('/api/auth-status');
             const data = await response.json();
+
+            // Jesli uzytkownik jest zalogowany, przekierowuje na strone profilu
             if (data.isAuthenticated) {
                 window.location.href = '/profile.html';
             }
         } catch (error) {
             console.error('Error checking auth status:', error);
         } finally {
+            // Resetuje flaga, aby mozna bylo ponownie wywolac tia funkcje
             authCheckInProgress = false;
         }
     }
 
+    // Wywoluje funkcje sprawdzajaca status autoryzacji, gdy dokument zostanie zaladowany
     document.addEventListener('DOMContentLoaded', checkAuthStatus);
 
+    // Obsluguje zdarzenie submit formularza logowania
     document.getElementById('loginForm').addEventListener('submit', async (e) => {
+        // Zapobiega domyslnemu zachowaniu formularza
         e.preventDefault();
+
+        // Pobiera dane z formularza
         const formData = new FormData(e.target);
         const data = Object.fromEntries(formData);
 
         try {
+            // Wysyla zapytanie o zalogowanie uzytkownika
             const response = await fetch('/login', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify(data),
+                // Wysyla cookie, aby serwer mial dostep do informacji o uzytkowniku
                 credentials: 'include'
             });
             const result = await response.json();
+
+            // Wyswietla wiadomosc o sukcesie lub bledzie
             const notification = document.getElementById('notification');
             notification.textContent = result.message;
             notification.className = 'notification ' + (response.ok ? 'success' : 'error');
-            
+
+            // Jesli uzytkownik zostal zalogowany, przekierowuje na strone, ktora jest wskazana w odpowiedzi
             if (response.ok) {
                 setTimeout(() => {
                     window.location.href = result.redirect;

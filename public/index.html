@@ -144,9 +144,11 @@
     <script>
         async function checkAuthStatus() {
             try {
+                // Wysyla zapytanie o status autoryzacji
                 const response = await fetch('/api/auth-status');
                 const data = await response.json();
                 if (data.isAuthenticated) {
+                    // Jesli uzytkownik jest zalogowany, pobiera jego nazwe uzytkownika
                     const usernameResponse = await fetch('/api/username', { credentials: 'include' });
                     const usernameData = await usernameResponse.json();
                     document.getElementById('authLink').innerHTML = `
@@ -154,21 +156,25 @@
                             ${usernameData.nickname}
                         </a>
                     `;
+                    // Ustawia linki do strony rezerwacji
                     document.getElementById('reserveLink').href = 'reservation.html';
                     document.getElementById('reserveButton').onclick = () => {
                         window.location.href = 'reservation.html';
                     };
                 } else {
+                    // Jesli uzytkownik nie jest zalogowany, przekierowuje na strone logowania
                     document.getElementById('reserveLink').href = 'user.html';
                     document.getElementById('reserveButton').onclick = () => {
                         window.location.href = 'user.html';
                     };
                 }
             } catch (error) {
+                // Wywietla blad w konsoli, jesli wystapil problem ze sprawdzaniem statusu autoryzacji
                 console.error('Error checking auth status:', error);
             }
         }
 
+        // Wywoluje funkcje checkAuthStatus po zaladowaniu dokumentu
         document.addEventListener('DOMContentLoaded', checkAuthStatus);
     </script>
 </body>

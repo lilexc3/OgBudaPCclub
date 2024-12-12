@@ -1,4 +1,5 @@
 require('dotenv').config();
+// Importowanie niezbednych bibliotek
 const express = require('express');
 const bodyParser = require('body-parser');
 const { connectToDatabase, getDb } = require('./db');
@@ -8,10 +9,11 @@ const session = require('express-session');
 const bcrypt = require('bcrypt');
 const { ObjectId } = require('mongodb');
 
+// Utworzenie aplikacji Express
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Middleware
+// Ustawienie parsera JSON
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cors());
@@ -20,16 +22,16 @@ app.use(session({
     secret: process.env.SESSION_SECRET || 'your-secret-key',
     resave: false,
     saveUninitialized: true,
-    cookie: { secure: false } // Set to true if using HTTPS
+    cookie: { secure: false }
 }));
 
-// Middleware для логирования запросов
+// Middleware, ktory loguje kazdy request
 app.use((req, res, next) => {
     console.log(`Incoming request: ${req.method} ${req.url}`);
     next();
 });
 
-// Middleware to check if user is authenticated
+// Middleware, ktory sprawdza, czy uzytkownik jest zalogowany
 const isAuthenticated = (req, res, next) => {
     if (req.session.userId) {
         next();
@@ -38,14 +40,17 @@ const isAuthenticated = (req, res, next) => {
     }
 };
 
+// Zmienne globalne
 let db;
 
-// Запуск сервера и подключение к MongoDB
+// Funkcja uruchamiajaca serwer
 async function startServer() {
     try {
+        // Polaczenie z baz danych
         db = await connectToDatabase();
         console.log('MongoDB Atlas connection established.');
 
+        // Uruchomienie serwera
         app.listen(PORT, () => {
             console.log(`Server is running on http://localhost:${PORT}`);
         });
@@ -56,34 +61,35 @@ async function startServer() {
     }
 }
 
-// Route для главной страницы
+// routing
 app.get('/', (req, res) => {
+    // Zwraca strone glowna
     res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
-// Route для страницы логина
 app.get('/user', (req, res) => {
+    // Zwraca strone logowania
     res.sendFile(path.join(__dirname, 'public', 'user.html'));
 });
 
-// Route для страницы регистрации
 app.get('/signup', (req, res) => {
+    // Zwraca strone rejestracji
     res.sendFile(path.join(__dirname, 'public', 'signUp.html'));
 });
 
-// Route для страницы бронирования
 app.get('/reservation', isAuthenticated, (req, res) => {
+    // Zwraca strone rezerwacji, ale tylko dla zalogowanych uzytkownikow
     res.sendFile(path.join(__dirname, 'public', 'reservation.html'));
 });
 
-// Route для страницы профиля пользователя
 app.get('/profile', isAuthenticated, (req, res) => {
+    // Zwraca strone profilu, ale tylko dla zalogowanych uzytkownikow
     res.sendFile(path.join(__dirname, 'public', 'profile.html'));
 });
 
-// API endpoints
 app.get('/api/users', async (req, res) => {
     try {
+        // Zwraca liste wszystkich uzytkownikow
         const users = await db.collection('users').find({}).toArray();
         res.json(users);
     } catch (err) {
@@ -92,17 +98,17 @@ app.get('/api/users', async (req, res) => {
     }
 });
 
-// Обработчик POST-запроса для регистрации (signup)
 app.post('/signup', async (req, res) => {
     const { nickname, password, email, date } = req.body;
 
     try {
-        // Проверка, существует ли уже пользователь с таким email
+        // Sprawdza, czy uzytkownik o podanym emailu juz istnieje
         const existingUser = await db.collection('users').findOne({ email });
         if (existingUser) {
             return res.status(400).json({ message: 'User with this email already exists' });
         }
 
+        // Hasuje haslo i tworzy nowego uzytkownika
         const hashedPassword = await bcrypt.hash(password, 10);
         const result = await db.collection('users').insertOne({ nickname, password: hashedPassword, email, date });
         console.log('User created:', result);
@@ -113,11 +119,11 @@ app.post('/signup', async (req, res) => {
     }
 });
 
-// Обработчик POST-запроса для логина
 app.post('/login', async (req, res) => {
     const { email, password } = req.body;
 
     try {
+        // Sprawdza, czy uzytkownik o podanym emailu i hasle istnieje
         const user = await db.collection('users').findOne({ email });
         if (user && await bcrypt.compare(password, user.password)) {
             req.session.userId = user._id.toString();
@@ -131,12 +137,12 @@ app.post('/login', async (req, res) => {
     }
 });
 
-// Обработчик POST-запроса для бронирования
 app.post('/reserve', isAuthenticated, async (req, res) => {
     const { date, time, pcType } = req.body;
     const userId = req.session.userId;
 
     try {
+        // Tworzy nowa rezerwacje
         const result = await db.collection('reservations').insertOne({ userId, date, time, pcType });
         res.status(201).json({ message: 'Reservation successful' });
     } catch (err) {
@@ -145,9 +151,9 @@ app.post('/reserve', isAuthenticated, async (req, res) => {
     }
 });
 
-// API endpoint для получения информации о пользователе и его бронированиях
 app.get('/api/user-info', isAuthenticated, async (req, res) => {
     try {
+        // Zwraca informacje o zalogowanym uzytkowniku
         const userId = new ObjectId(req.session.userId);
         const user = await db.collection('users').findOne({ _id: userId });
         if (!user) {
@@ -161,9 +167,9 @@ app.get('/api/user-info', isAuthenticated, async (req, res) => {
     }
 });
 
-// Новый endpoint для получения имени пользователя
 app.get('/api/username', isAuthenticated, async (req, res) => {
     try {
+        // Zwraca nazwe uzytkownika zalogowanego
         const userId = new ObjectId(req.session.userId);
         const user = await db.collection('users').findOne({ _id: userId });
         if (!user) {
@@ -176,8 +182,8 @@ app.get('/api/username', isAuthenticated, async (req, res) => {
     }
 });
 
-// Обработчик для выхода из системы
 app.post('/logout', (req, res) => {
+    // Usuwa sesje uzytkownika i wylogowuje go
     req.session.destroy((err) => {
         if (err) {
             console.error('Error destroying session:', err);
@@ -188,8 +194,8 @@ app.post('/logout', (req, res) => {
     });
 });
 
-// Add a new route to check authentication status
 app.get('/api/auth-status', (req, res) => {
+    // Sprawdza, czy uzytkownik jest zalogowany
     if (req.session.userId) {
         res.json({ isAuthenticated: true });
     } else {
@@ -197,11 +203,10 @@ app.get('/api/auth-status', (req, res) => {
     }
 });
 
-// Обработчик 404 (страница не найдена)
 app.use((req, res) => {
+    // Zwraca strone 404, gdy nie znaleziono strony
     res.status(404).sendFile(path.join(__dirname, 'public', '404.html'));
 });
 
-// Запуск сервера
 startServer();
 

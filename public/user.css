@@ -1,4 +1,6 @@
+/* Główne style CSS dla strony logowania */
 :root {
+    /* Kolory */
     --primary-color: #1a1a1a;
     --secondary-color: #2a2a2a;
     --accent-color: #b1b1b1;
@@ -9,6 +11,7 @@
 }
 
 body {
+    /* Ustawienia czcionki i tła */
     font-family: 'Roboto', sans-serif;
     margin: 0;
     padding: 0;
@@ -18,6 +21,7 @@ body {
 }
 
 .nav-bar {
+    /* Styl paska nawigacyjnego */
     background-color: rgba(27, 27, 27, 0.9);
     color: var(--text-color);
     display: flex;
@@ -34,22 +38,26 @@ body {
 }
 
 .nav-bar:hover {
+    /* Efekt hover dla paska nawigacyjnego */
     background-color: rgba(27, 27, 27, 1);
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
 }
 
 .nav-bar ul {
+    /* Lista elementów w pasku nawigacyjnym */
     list-style-type: none;
     padding: 0;
     margin: 0;
 }
 
 .nav-bar li {
+    /* Elementy listy w pasku nawigacyjnym */
     display: inline;
     margin-right: 20px;
 }
 
 .nav-bar a {
+    /* Linki w pasku nawigacyjnym */
     color: var(--text-color);
     text-decoration: none;
     font-weight: 500;
@@ -58,11 +66,13 @@ body {
 }
 
 .nav-bar a:hover {
+    /* Efekt hover dla linków */
     color: var(--accent-color);
     transform: translateY(-2px);
 }
 
 .logo {   
+    /* Styl logo */
     font-size: 28px;
     font-weight: bold;
     color: var(--accent-color);
@@ -70,20 +80,24 @@ body {
 }
 
 .logo:hover {
+    /* Efekt hover dla logo */
     text-shadow: 0 0 10px rgba(177, 177, 177, 0.5);
 }
 
 .user {
+    /* Ikona użytkownika */
     width: 24px;
     height: 24px;
     transition: transform 0.3s ease;
 }
 
 .user:hover {
+    /* Efekt hover dla ikony użytkownika */
     transform: scale(1.1) rotate(5deg);
 }
 
 .headik {
+    /* Styl nagłówka */
     background-color: var(--secondary-color);
     background-image: url(images/banrt.gif);
     background-attachment: fixed;
@@ -98,6 +112,7 @@ body {
 }
 
 .headik::before {
+    /* Cień nagłówka */
     content: '';
     position: absolute;
     top: 0;
@@ -109,6 +124,7 @@ body {
 }
 
 .header-content {
+    /* Kontener zawartości nagłówka */
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -121,23 +137,27 @@ body {
 }
 
 .left-section {
+    /* Lewa sekcja nagłówka */
     flex: 1;
     padding-right: 40px;
 }
 
 .left-section h1 {
+    /* Główny tytuł */
     font-size: 3.5rem;
     margin-bottom: 20px;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
 .right-section {
+    /* Prawa sekcja nagłówka */
     align-self: flex-end;
     margin-bottom: 0;
     padding-bottom: 0;
 }
 
 .right-section img {
+    /* Obrazek w prawej sekcji */
     max-height: 600px;
     width: auto;
     display: block;
@@ -146,6 +166,7 @@ body {
 }
 
 .headik form {
+    /* Styl formularza */
     background-color: rgba(42, 42, 42, 0.8);
     padding-top: 40px;
     padding-right: 40px;
@@ -161,11 +182,13 @@ body {
 }
 
 .headik form:hover {
+    /* Efekt hover dla formularza */
     transform: translateY(-5px);
     box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
 }
 
 .headik form label {
+    /* Etykiety w formularzu */
     display: block;
     margin-bottom: 8px;
     color: var(--text-color);
@@ -174,10 +197,12 @@ body {
 }
 
 .headik form label:hover {
+    /* Efekt hover dla etykiet */
     transform: translateX(5px);
 }
 
 .headik form input {
+    /* Pola wejściowe w formularzu */
     width: 100%;
     padding: 12px;
     margin-bottom: 20px;
@@ -189,6 +214,7 @@ body {
 }
 
 .headik form input:focus {
+    /* Efekt focus dla pól wejściowych */
     outline: none;
     border-color: var(--hover-color);
     box-shadow: 0 0 0 2px rgba(133, 133, 133, 0.3);
@@ -196,6 +222,7 @@ body {
 }
 
 .headik form button {
+    /* Przycisk w formularzu */
     background-color: var(--accent-color);
     color: var(--primary-color);
     border: none;
@@ -211,33 +238,39 @@ body {
 }
 
 .headik form button:hover {
+    /* Efekt hover dla przycisku */
     background-color: var(--hover-color);
     transform: translateY(-3px);
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
 }
 
 .headik form button:active {
+    /* Efekt active dla przycisku */
     transform: translateY(-1px);
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
 
 .left-section p {
+    /* Paragraf w lewej sekcji */
     text-align: center;
     margin-top: 20px;
 }
 
 .left-section a {
+    /* Linki w lewej sekcji */
     color: var(--accent-color);
     text-decoration: none;
     transition: color 0.3s ease;
 }
 
 .left-section a:hover {
+    /* Efekt hover dla linków w lewej sekcji */
     color: var(--hover-color);
     text-decoration: underline;
 }
 
 footer {
+    /* Styl stopki */
     background-color: #000000;
     color: var(--text-color);
     text-align: center;
@@ -246,6 +279,7 @@ footer {
 }
 
 .footer-content {
+    /* Zawartość stopki */
     max-width: 1200px;
     margin: 0 auto;
     display: flex;
@@ -255,27 +289,30 @@ footer {
 }
 
 .social-links {
+    /* Linki społecznościowe */
     margin-top: 20px;
 }
 
 .social-link {
+    /* Pojedynczy link społecznościowy */
     margin: 0 15px;
     display: inline-block;
     transition: transform 0.3s ease;
 }
 
 .social-link:hover {
+    /* Efekt hover dla linków społecznościowych */
     transform: translateY(-5px);
 }
 
 .social-link img {
+    /* Obrazki w linkach społecznościowych */
     width: 30px;
     height: 30px;
 }
 
-/* Add this to the existing CSS */
-
 .notification {
+    /* Styl powiadomień */
     padding: 10px;
     margin-top: 20px;
     border-radius: 5px;
@@ -284,16 +321,18 @@ footer {
 }
 
 .notification.success {
+    /* Powiadomienie o sukcesie */
     background-color: var(--success-color);
     color: white;
 }
 
 .notification.error {
+    /* Powiadomienie o błędzie */
     background-color: var(--error-color);
     color: white;
 }
 
-
+/* Media queries dla responsywności */
 @media (max-width: 1200px) {
     .header-content {
         flex-direction: column;
@@ -359,6 +398,7 @@ footer {
     }
 }
 
+/* Animacje */
 @keyframes fadeIn {
     from { opacity: 0; }
     to { opacity: 1; }
@@ -382,4 +422,3 @@ footer {
 .headik form input:nth-child(1) { animation-delay: 0.1s; }
 .headik form input:nth-child(2) { animation-delay: 0.2s; }
 .headik form button { animation-delay: 0.3s; }
-

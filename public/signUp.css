@@ -1,3 +1,4 @@
+/* Główne kolory strony */
 :root {
     --primary-color: #1a1a1a;
     --secondary-color: #2a2a2a;
@@ -8,6 +9,7 @@
     --error-color: #f44336;
 }
 
+/* Podstawowe style dla body */
 body {
     font-family: 'Roboto', sans-serif;
     margin: 0;
@@ -17,6 +19,7 @@ body {
     line-height: 1.6;
 }
 
+/* Styl paska nawigacyjnego */
 .nav-bar {
     background-color: rgba(27, 27, 27, 0.9);
     color: var(--text-color);
@@ -33,22 +36,26 @@ body {
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
+/* Efekt hover dla paska nawigacyjnego */
 .nav-bar:hover {
     background-color: rgba(27, 27, 27, 1);
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
 }
 
+/* Lista elementów w pasku nawigacyjnym */
 .nav-bar ul {
     list-style-type: none;
     padding: 0;
     margin: 0;
 }
 
+/* Elementy listy w pasku nawigacyjnym */
 .nav-bar li {
     display: inline;
     margin-right: 20px;
 }
 
+/* Linki w pasku nawigacyjnym */
 .nav-bar a {
     color: var(--text-color);
     text-decoration: none;
@@ -57,11 +64,13 @@ body {
     display: inline-block;
 }
 
+/* Efekt hover dla linków */
 .nav-bar a:hover {
     color: var(--accent-color);
     transform: translateY(-2px);
 }
 
+/* Styl logo */
 .logo {   
     font-size: 28px;
     font-weight: bold;
@@ -69,16 +78,19 @@ body {
     transition: text-shadow 0.3s ease;
 }
 
+/* Efekt hover dla logo */
 .logo:hover {
     text-shadow: 0 0 10px rgba(177, 177, 177, 0.5);
 }
 
+/* Ikona użytkownika */
 .user {
     width: 24px;
     height: 24px;
     transition: transform 0.3s ease;
 }
 
+/* Efekt hover dla ikony użytkownika */
 .user:hover {
     transform: scale(1.1) rotate(5deg);
 }
@@ -145,49 +157,76 @@ body {
     vertical-align: bottom;
 }
 
+
+/* Styl formularza */
 .headik form {
+    /* Kolor tła formularza */
     background-color: rgba(42, 42, 42, 0.8);
+    /* Padding */
     padding-top: 40px;
     padding-right: 40px;
     padding-bottom: 40px;
     padding-left: 15px;
+    /* Rounding */
     border-radius: 15px;
+    /* Maksymalna szerokość */
     max-width: 400px;
+    /* Marginesy */
     margin: 0 auto;
     margin-bottom: 20px;
+    /* Cień */
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    /* Rozmycie */
     backdrop-filter: blur(10px);
+    /* Animacja */
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
+/* Animacja hover */
 .headik form:hover {
     transform: translateY(-5px);
     box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
 }
 
+/* Styl etykiety */
 .headik form label {
+    /* Wyświetlanie etykiety */
     display: block;
+    /* Margines */
     margin-bottom: 8px;
+    /* Kolor tekstu */
     color: var(--text-color);
+    /* Grubość tekstu */
     font-weight: bold;
+    /* Animacja */
     transition: transform 0.3s ease;
 }
 
+/* Animacja hover dla etykiety */
 .headik form label:hover {
     transform: translateX(5px);
 }
 
+/* Styl pola wejściowego */
 .headik form input {
+    /* Szerokość */
     width: 100%;
+    /* Padding */
     padding: 12px;
+    /* Margines */
     margin-bottom: 20px;
+    /* Kolor tła */
     border: 1px solid var(--accent-color);
     background-color: rgba(26, 26, 26, 0.7);
+    /* Kolor tekstu */
     color: var(--text-color);
+    /* Rounding */
     border-radius: 5px;
+    /* Animacja */
     transition: all 0.3s ease;
 }
 
+/* Animacja focus */
 .headik form input:focus {
     outline: none;
     border-color: var(--hover-color);
@@ -195,72 +234,105 @@ body {
     transform: translateY(-2px);
 }
 
+/* Styl pola daty */
 .headik form input[type="date"] {
     appearance: none;
     -webkit-appearance: none;
     -moz-appearance: none;
 }
 
+/* Styl przycisku wyboru daty */
 .headik form input[type="date"]::-webkit-calendar-picker-indicator {
     filter: invert(1);
     cursor: pointer;
     transition: opacity 0.3s ease;
 }
 
+/* Animacja hover dla przycisku wyboru daty */
 .headik form input[type="date"]::-webkit-calendar-picker-indicator:hover {
     opacity: 0.7;
 }
 
+/* Styl przycisku */
 .headik form button {
+    /* Kolor tła */
     background-color: var(--accent-color);
+    /* Kolor tekstu */
     color: var(--primary-color);
+    /* Brak obramowania */
     border: none;
+    /* Padding */
     padding: 15px 30px;
+    /* Rozmiar tekstu */
     font-size: 1rem;
+    /* Grubość tekstu */
     font-weight: bold;
+    /* Kursor */
     cursor: pointer;
+    /* Animacja */
     transition: all 0.3s ease;
+    /* Rounding */
     border-radius: 5px;
+    /* Szerokość */
     width: 100%;
+    /* Transformacja tekstu */
     text-transform: uppercase;
+    /* Rozstawienie liter */
     letter-spacing: 1px;
 }
 
+/* Animacja hover */
 .headik form button:hover {
     background-color: var(--hover-color);
     transform: translateY(-3px);
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
 }
 
+/* Animacja click */
 .headik form button:active {
     transform: translateY(-1px);
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
 
+/* Styl sekcji z tekstem */
 .left-section p {
+    /* Tekst pośrodkowany */
     text-align: center;
+    /* Margines */
     margin-top: 20px;
 }
 
+/* Styl linku */
 .left-section a {
+    /* Kolor */
     color: var(--accent-color);
+    /* Brak dekoracji */
     text-decoration: none;
+    /* Animacja */
     transition: color 0.3s ease;
 }
 
+/* Animacja hover */
 .left-section a:hover {
     color: var(--hover-color);
     text-decoration: underline;
 }
 
+/* Styl stopki */
 footer {
+    /* Kolor tła */
     background-color: #000000;
+    /* Kolor tekstu */
     color: var(--text-color);
+    /* Tekst pośrodkowany */
     text-align: center;
+    /* Padding */
     padding: 40px 0;
+    /* Margines */
     margin-top: 60px;
 }
 
+/* Zawartość stopki */
 .footer-content {
     max-width: 1200px;
     margin: 0 auto;
@@ -270,26 +342,30 @@ footer {
     flex-wrap: wrap;
 }
 
+/* Linki społecznościowe */
 .social-links {
     margin-top: 20px;
 }
 
+/* Pojedynczy link społecznościowy */
 .social-link {
     margin: 0 15px;
     display: inline-block;
     transition: transform 0.3s ease;
 }
 
+/* Efekt hover dla linków społecznościowych */
 .social-link:hover {
     transform: translateY(-5px);
 }
 
+/* Obrazki w linkach społecznościowych */
 .social-link img {
     width: 30px;
     height: 30px;
 }
-/* Add this to the existing CSS */
 
+/* Styl powiadomień */
 .notification {
     padding: 10px;
     margin-top: 20px;
@@ -298,11 +374,13 @@ footer {
     font-weight: bold;
 }
 
+/* Powiadomienie o sukcesie */
 .notification.success {
     background-color: var(--success-color);
     color: white;
 }
 
+/* Powiadomienie o błędzie */
 .notification.error {
     background-color: var(--error-color);
     color: white;
@@ -310,19 +388,23 @@ footer {
 
 
 
+/* Media queries */
 @media (max-width: 1200px) {
     .header-content {
+        /* Kontener nagłówka - flexbox z kolumnami */
         flex-direction: column;
         align-items: center;
     }
 
     .left-section, .right-section {
+        /* Lewa i prawa sekcja - szerokość 100% */
         width: 100%;
         padding: 0;
         margin-bottom: 30px;
     }
 
     .right-section img {
+        /* Obrazek w prawej sekcji - max-height 400px */
         max-height: 400px;
         margin: 0 auto;
     }
@@ -330,67 +412,81 @@ footer {
 
 @media (max-width: 768px) {
     .nav-bar {
+        /* Pasek nawigacyjny - flexbox z wierszami */
         flex-direction: row;
         justify-content: space-between;
         padding: 10px 5%;
     }
 
     .headik {
+        /* Nagłówek - padding-top 120px */
         padding-top: 120px;
     }
 
     .left-section h1 {
+        /* Główny tytuł - rozmiar 2.5rem */
         font-size: 2.5rem;
     }
 
     .right-section img {
+        /* Obrazek w prawej sekcji - max-height 300px */
         max-height: 300px;
     }
 
     .headik form {
+        /* Formularz - max-width 90% */
         max-width: 90%;
     }
 }
 
 @media (max-width: 480px) {
     .nav-bar li {
+        /* Elementy listy w pasku nawigacyjnym - margines 10px */
         margin-right: 10px;
     }
 
     .left-section h1 {
+        /* Główny tytuł - rozmiar 2rem */
         font-size: 2rem;
     }
 
     .headik form {
+        /* Formularz - padding 20px */
         padding: 20px;
     }
 
     .right-section img {
+        /* Obrazek w prawej sekcji - max-height 200px */
         max-height: 200px;
     }
 
     .headik form input,
     .headik form button {
+        /* Rozmiar tekstu w formularzu - 14px */
         font-size: 14px;
     }
 }
 
+/* Animacja fadeIn */
 @keyframes fadeIn {
     from { opacity: 0; }
     to { opacity: 1; }
 }
 
+/* Animacja slideIn */
 @keyframes slideIn {
     from { transform: translateY(20px); opacity: 0; }
     to { transform: translateY(0); opacity: 1; }
 }
 
 .headik form {
+    /* Animacja fadeIn i slideIn */
     animation: fadeIn 0.5s ease-out, slideIn 0.5s ease-out;
 }
 
 .headik form input,
 .headik form button {
+    /* Animacja fadeIn */
     animation: fadeIn 0.5s ease-out;
     animation-fill-mode: both;
 }

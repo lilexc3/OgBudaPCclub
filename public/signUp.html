@@ -58,12 +58,15 @@
         </div>
     </footer>
     <script>
+        // Obsluga formularza rejestracji
         document.getElementById('signupForm').addEventListener('submit', async (e) => {
+            // Zapobiega domyslnemu zachowaniu formularza
             e.preventDefault();
             const formData = new FormData(e.target);
             const data = Object.fromEntries(formData);
 
             try {
+                // Wysyla zapytanie o rejestracje uzytkownika
                 const response = await fetch('/signup', {
                     method: 'POST',
                     headers: {
@@ -76,6 +79,7 @@
                 notification.textContent = result.message;
                 notification.className = 'notification ' + (response.ok ? 'success' : 'error');
                 
+                // Jesli uzytkownik zostal zarejestrowany, przekierowuje na strone, ktora jest wskazana w odpowiedzi
                 if (response.ok) {
                     setTimeout(() => {
                         window.location.href = '/user.html';
